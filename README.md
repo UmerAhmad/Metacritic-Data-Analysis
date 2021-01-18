@@ -20,8 +20,12 @@ GAMES ----------
 ![alt text](https://github.com/UmerAhmad/Metacritic-Data-Analysis/blob/main/images/games%20example%20-%20jan%2018%202021.PNG)
 
 
+
+
 MOVIES -----------------
 ![alt text](https://github.com/UmerAhmad/Metacritic-Data-Analysis/blob/main/images/movies%20example%20-%20jan%2018%202021.PNG)
+
+
 
 
 TV --------------------
