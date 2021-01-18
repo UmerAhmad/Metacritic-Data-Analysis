@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 import math
+from time import sleep
 
 '''
 Manually defining the genres for each media, as for metacritic certain genres
@@ -89,7 +90,7 @@ for types in score_types:
               types + '/' + genre + media_to_genres[media_type][2] +'?view=detailed'
         page = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
         soup = BeautifulSoup(page.content, 'html.parser')
-
+        sleep(0.5)
         sample_size = 0
         critic_score_sum = 0
         user_score_sum = 0
@@ -98,29 +99,27 @@ for types in score_types:
         #the html, this loop simply gathers data from all of them
         for number in list_split:
 
-            try:
-                media_list = soup.find(class_="browse_list_wrapper " + number + " browse-list-large")
+            media_list = soup.find(class_="browse_list_wrapper " + number + " browse-list-large")
 
-                media = media_list.find_all(class_="browse-score-clamp")
-                #Isolate all elements of data through filtering of class
-                for element in media:
-                    media_critic_score = element.find(class_="metascore_w large " + media_to_genres[media_type][1] + " positive")
-                    media_user_score = element.find(class_="metascore_w user large " + media_to_genres[media_type][1] + " positive")
-                    #If both scores, meta and user, are present in the review of the
-                    #movie/show/game, only then include it
-                    if media_critic_score is not None and media_user_score is not None:
-                        sample_size += 1
+            media = media_list.find_all(class_="browse-score-clamp")
+            #Isolate all elements of data through filtering of class
+            for element in media:
+                media_critic_score = element.find(class_="metascore_w large " + media_to_genres[media_type][1] + " positive")
+                media_user_score = element.find(class_="metascore_w user large " + media_to_genres[media_type][1] + " positive")
+                #If both scores, meta and user, are present in the review of the
+                #movie/show/game, only then include it
+                if media_critic_score is not None and media_user_score is not None:
+                    sample_size += 1
 
-                        critic_score = float(media_critic_score.text)
-                        user_score = float(media_user_score.text) * 10
+                    critic_score = float(media_critic_score.text)
+                    user_score = float(media_user_score.text) * 10
 
-                        critic_score_sum += critic_score
-                        user_score_sum += user_score
+                    critic_score_sum += critic_score
+                    user_score_sum += user_score
 
-                        critic_scores.append(critic_score)
-                        user_scores.append(user_score)
-            except AttributeError:
-                print("Error while scraping, please try again!")
+                    critic_scores.append(critic_score)
+                    user_scores.append(user_score)
+
 
         #calculate average, add to previous arrays to display using matplotlib
         critic_score_avg = round(critic_score_sum / sample_size, 2)
