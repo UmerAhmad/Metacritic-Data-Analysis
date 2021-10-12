@@ -4,7 +4,9 @@ Metacritic Data Analysis, that given by the choice of user input, takes the top 
 variance, std deviations, and correlations between critic and metascore to determine which one is optimal to sort by. Data gathering done by BeautifulSoup, and data displayed
 using MatplotLib.
 
-REQUIRED LIBRARIES:
+---- Created for demonstration and learning purposes ----
+
+LIBRARIES USED:
 MatplotLIB
 Requests
 BeautifulSoup (bs4)
